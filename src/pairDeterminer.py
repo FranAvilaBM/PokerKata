@@ -55,4 +55,4 @@ class PairDeterminer:
 
         if found:
             return HandValue(Ranking.PAIR, value, rest_cards)
-        return HandValue(Ranking.HIGH_CARD, grouped_hand[0][0], rest_cards)
+        return HandValue(Ranking.HIGH_CARD, None, rest_cards)
