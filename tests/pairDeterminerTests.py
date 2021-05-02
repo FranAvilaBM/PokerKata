@@ -13,3 +13,14 @@ def test_determine_given_hand_with_no_pair_should_return_None():
     determiner = PairDeterminer()
     result = determiner.determine(hand)
     assert result.rank.value == Ranking.HIGH_CARD.value
+
+
+def test_determine_given_hand_with_pair_should_return_pair_result():
+    hand = [Card(Suit.HEARTS, FaceValue.ACE),
+            Card(Suit.CLUBS, FaceValue.ACE),
+            Card(Suit.HEARTS, FaceValue.TWO),
+            Card(Suit.HEARTS, FaceValue.THREE),
+            Card(Suit.HEARTS, FaceValue.FOUR)]
+    determiner = PairDeterminer()
+    result = determiner.determine(hand)
+    assert result.rank == Ranking.PAIR
