@@ -13,7 +13,7 @@ class PairDeterminer:
         face_value = ''
         rest_cards = []
         pair_found = False
-        previous_card = None
+        previous_card_face_value = None
         value = None
         # Check if pair
         for card in hand:
@@ -23,9 +23,9 @@ class PairDeterminer:
                     value = card.face_value
                 else:
                     face_value = card.face_value
-                    if previous_card:
-                        rest_cards.append(previous_card)
-                    previous_card = card
+                    if previous_card_face_value:
+                        rest_cards.append(previous_card_face_value)
+                    previous_card_face_value = card.face_value
             else:
                 rest_cards.append(card.face_value)
         if pair_found:
