@@ -23,4 +23,24 @@ def test_determine_given_hand_with_pair_should_return_pair_result():
             Card(Suit.HEARTS, FaceValue.FOUR)]
     determiner = PairDeterminer()
     result = determiner.determine(hand)
-    assert result.rank == Ranking.PAIR
+    assert result.rank.value == Ranking.PAIR.value
+
+def test_determine_given_hand_with_pair_should_return_highest_pair_result():
+    hand = [Card(Suit.HEARTS, FaceValue.ACE),
+            Card(Suit.CLUBS, FaceValue.ACE),
+            Card(Suit.HEARTS, FaceValue.TWO),
+            Card(Suit.CLUBS, FaceValue.TWO),
+            Card(Suit.HEARTS, FaceValue.FOUR)]
+    determiner = PairDeterminer()
+    result = determiner.determine(hand)
+    assert result.value == FaceValue.ACE
+
+def test_determine_given_hand_with_pair_should_return_highest_pair_result_and_rest():
+    hand = [Card(Suit.HEARTS, FaceValue.ACE),
+            Card(Suit.CLUBS, FaceValue.ACE),
+            Card(Suit.HEARTS, FaceValue.TWO),
+            Card(Suit.CLUBS, FaceValue.TWO),
+            Card(Suit.HEARTS, FaceValue.FOUR)]
+    determiner = PairDeterminer()
+    result = determiner.determine(hand)
+    assert result.rest == [FaceValue.FOUR, FaceValue.TWO, FaceValue.TWO]
