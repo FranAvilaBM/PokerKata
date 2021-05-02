@@ -34,13 +34,10 @@ class PairDeterminer:
         counter = Counter(face_values)
         return list(map(lambda x: self._count_items(x, counter), unique_face_values))
 
-    def determine(self, hand):
+    def _get_pair(self, grouped_hand):
         rest_cards = []
         pair_found = False
         value = None
-
-        grouped_hand = self._group_hand_by_value_repetition(hand)
-
         for card_value in grouped_hand:
             amount = card_value[1]
             if not pair_found:
@@ -49,7 +46,13 @@ class PairDeterminer:
                     value = card_value[0]
                     amount = card_value[1] - self._cards_in_a_pair
             self._add_cards_to_rest(rest_cards, card_value, amount)
+        return pair_found, value, rest_cards
 
-        if pair_found:
+    def determine(self, hand):
+
+        grouped_hand = self._group_hand_by_value_repetition(hand)
+        found, value, rest_cards = self._get_pair(grouped_hand)
+
+        if found:
             return HandValue(Ranking.PAIR, value, rest_cards)
         return HandValue(Ranking.HIGH_CARD, grouped_hand[0][0], rest_cards)
