@@ -21,6 +21,7 @@ def test_determine_given_hand_with_no_pair_should_return_None():
     determiner = PairDeterminer()
     result = determiner.determine(hand)
     assert result.rank.value == Ranking.HIGH_CARD.value
+    assert result.value == FaceValue.ACE
 
 
 def test_determine_given_hand_with_pair_should_return_pair_result():
