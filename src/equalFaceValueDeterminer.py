@@ -57,3 +57,9 @@ class EqualFaceValueDeterminer:
         if found:
             return HandValue(self._ranking, value, rest_cards)
         return HandValue(Ranking.HIGH_CARD, None, rest_cards)
+
+
+class PairDeterminer(EqualFaceValueDeterminer):
+    def __init__(self):
+        self._amount_equal_face_value = 2
+        self._ranking = Ranking.PAIR
