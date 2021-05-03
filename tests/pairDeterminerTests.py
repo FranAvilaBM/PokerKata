@@ -56,7 +56,7 @@ def test_determine_given_hand_with_pair_should_return_pair_result_and_rest():
     assert result.value == FaceValue.TWO
     assert result.rest == [FaceValue.ACE, FaceValue.FOUR, FaceValue.THREE]
 
-def test_determine_given_hand_with_three_of_a_kind_should_return_pair_result_and_rest():
+def test_determine_given_hand_with_three_of_a_kind_should_return_three_of_a_kind_result_and_rest():
     hand = [Card(Suit.HEARTS, FaceValue.ACE),
             Card(Suit.HEARTS, FaceValue.THREE),
             Card(Suit.HEARTS, FaceValue.TWO),
@@ -78,7 +78,7 @@ def test_determine_given_hand_with_no_three_of_a_kind_should_return_None():
     assert result.rank.value == Ranking.HIGH_CARD.value
     assert result.value is None
 
-def test_determine_given_hand_with_four_of_a_kind_should_return_pair_result_and_rest():
+def test_determine_given_hand_with_four_of_a_kind_should_return_four_of_a_kind_result_and_rest():
     hand = [Card(Suit.HEARTS, FaceValue.ACE),
             Card(Suit.SPADES, FaceValue.TWO),
             Card(Suit.HEARTS, FaceValue.TWO),
@@ -99,3 +99,28 @@ def test_determine_given_hand_with_no_four_of_a_kind_should_return_None():
     result = determiner.determine(hand)
     assert result.rank.value == Ranking.HIGH_CARD.value
     assert result.value is None
+
+def test_determine_given_hand_with_no_four_of_a_kind_and_Having_three_of_a_kind_should_return_three_of_a_kind_result_and_rest():
+    hand = [Card(Suit.HEARTS, FaceValue.ACE),
+            Card(Suit.HEARTS, FaceValue.THREE),
+            Card(Suit.HEARTS, FaceValue.TWO),
+            Card(Suit.CLUBS, FaceValue.TWO),
+            Card(Suit.DIAMONDS, FaceValue.TWO)]
+    three_of_a_kind_determiner = ThreeOfAKindDeterminer()
+    four_of_a_kind_determiner = FourOfAKindDeterminer(three_of_a_kind_determiner)
+    result = four_of_a_kind_determiner.determine(hand)
+    assert result.value == FaceValue.TWO
+    assert result.rest == [FaceValue.ACE, FaceValue.THREE]
+
+def test_determine_given_hand_with_no_four_of_a_kind_and_Having_pair_should_return_a_pair_and_rest():
+    hand = [Card(Suit.HEARTS, FaceValue.ACE),
+            Card(Suit.HEARTS, FaceValue.THREE),
+            Card(Suit.HEARTS, FaceValue.TWO),
+            Card(Suit.CLUBS, FaceValue.TWO),
+            Card(Suit.DIAMONDS, FaceValue.TWO)]
+    pair_determiner = PairDeterminer()
+    three_of_a_kind_determiner = ThreeOfAKindDeterminer(pair_determiner)
+    four_of_a_kind_determiner = FourOfAKindDeterminer(three_of_a_kind_determiner)
+    result = four_of_a_kind_determiner.determine(hand)
+    assert result.value == FaceValue.TWO
+    assert result.rest == [FaceValue.ACE, FaceValue.THREE]

@@ -10,6 +10,7 @@ class EqualFaceValueDeterminer(ABC):
     def __init__(self):
         #self._amount_equal_face_value = Amount of elements to check
         #self._ranking = Rank of the combination
+        self._next_determiner = None
         pass
 
     @staticmethod
@@ -59,22 +60,26 @@ class EqualFaceValueDeterminer(ABC):
 
         if found:
             return HandValue(self._ranking, value, rest_cards)
+        if self._next_determiner is not None:
+            return self._next_determiner.determine(hand)
         return HandValue(Ranking.HIGH_CARD, None, rest_cards)
 
-
 class PairDeterminer(EqualFaceValueDeterminer):
-    def __init__(self):
+    def __init__(self, next_determiner=None):
         self._amount_equal_face_value = 2
         self._ranking = Ranking.PAIR
+        self._next_determiner = next_determiner
 
 
 class ThreeOfAKindDeterminer(EqualFaceValueDeterminer):
-    def __init__(self):
+    def __init__(self, next_determiner=None):
         self._amount_equal_face_value = 3
         self._ranking = Ranking.THREE_OF_A_KIND
+        self._next_determiner = next_determiner
 
 
 class FourOfAKindDeterminer(EqualFaceValueDeterminer):
-    def __init__(self):
+    def __init__(self, next_determiner=None):
         self._amount_equal_face_value = 4
         self._ranking = Ranking.FOUR_OF_A_KIND
+        self._next_determiner = next_determiner
