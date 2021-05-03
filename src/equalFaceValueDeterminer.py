@@ -68,3 +68,8 @@ class ThreeOfAKindDeterminer(EqualFaceValueDeterminer):
     def __init__(self):
         self._amount_equal_face_value = 3
         self._ranking = Ranking.THREE_OF_A_KIND
+
+class FourOfAKindDeterminer(EqualFaceValueDeterminer):
+    def __init__(self):
+        self._amount_equal_face_value = 4
+        self._ranking = Ranking.FOUR_OF_A_KIND
