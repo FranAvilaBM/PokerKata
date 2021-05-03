@@ -1,13 +1,16 @@
+from abc import ABC, abstractmethod
 from ranking import Ranking
 from handValue import HandValue
 from collections import Counter
 
 
-class EqualFaceValueDeterminer:
+class EqualFaceValueDeterminer(ABC):
 
+    @abstractmethod
     def __init__(self):
-        self._amount_equal_face_value = 2
-        self._ranking = Ranking.PAIR
+        #self._amount_equal_face_value = Amount of elements to check
+        #self._ranking = Rank of the combination
+        pass
 
     @staticmethod
     def _sort_hand(hand):
@@ -64,10 +67,12 @@ class PairDeterminer(EqualFaceValueDeterminer):
         self._amount_equal_face_value = 2
         self._ranking = Ranking.PAIR
 
+
 class ThreeOfAKindDeterminer(EqualFaceValueDeterminer):
     def __init__(self):
         self._amount_equal_face_value = 3
         self._ranking = Ranking.THREE_OF_A_KIND
+
 
 class FourOfAKindDeterminer(EqualFaceValueDeterminer):
     def __init__(self):
