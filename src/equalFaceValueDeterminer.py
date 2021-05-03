@@ -10,7 +10,7 @@ class EqualFaceValueDeterminer(ABC):
     def __init__(self):
         #self._amount_equal_face_value = Amount of elements to check
         #self._ranking = Rank of the combination
-        self._next_determiner = None
+        #self._next_determiner = None
         pass
 
     @staticmethod
