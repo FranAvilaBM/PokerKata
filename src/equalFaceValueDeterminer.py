@@ -38,7 +38,7 @@ class EqualFaceValueDeterminer(ABC):
         counter = Counter(face_values)
         return list(map(lambda x: self._count_items(x, counter), unique_face_values))
 
-    def _get_pair(self, grouped_hand):
+    def _get_combination(self, grouped_hand):
         rest_cards = []
         pair_found = False
         value = None
@@ -55,7 +55,7 @@ class EqualFaceValueDeterminer(ABC):
     def determine(self, hand):
 
         grouped_hand = self._group_hand_by_value_repetition(hand)
-        found, value, rest_cards = self._get_pair(grouped_hand)
+        found, value, rest_cards = self._get_combination(grouped_hand)
 
         if found:
             return HandValue(self._ranking, value, rest_cards)
