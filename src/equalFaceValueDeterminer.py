@@ -63,3 +63,8 @@ class PairDeterminer(EqualFaceValueDeterminer):
     def __init__(self):
         self._amount_equal_face_value = 2
         self._ranking = Ranking.PAIR
+
+class ThreeOfAKindDeterminer(EqualFaceValueDeterminer):
+    def __init__(self):
+        self._amount_equal_face_value = 3
+        self._ranking = Ranking.THREE_OF_A_KIND
