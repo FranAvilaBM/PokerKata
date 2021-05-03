@@ -3,10 +3,11 @@ from handValue import HandValue
 from collections import Counter
 
 
-class PairDeterminer:
+class EqualFaceValueDeterminer:
 
     def __init__(self):
-        self._cards_in_a_pair = 2
+        self._amount_equal_face_value = 2
+        self._ranking = Ranking.PAIR
 
     @staticmethod
     def _sort_hand(hand):
@@ -41,10 +42,10 @@ class PairDeterminer:
         for card_value in grouped_hand:
             amount = card_value[1]
             if not pair_found:
-                if card_value[1] >= self._cards_in_a_pair:
+                if card_value[1] >= self._amount_equal_face_value:
                     pair_found = True
                     value = card_value[0]
-                    amount = card_value[1] - self._cards_in_a_pair
+                    amount = card_value[1] - self._amount_equal_face_value
             self._add_cards_to_rest(rest_cards, card_value, amount)
         return pair_found, value, rest_cards
 
@@ -54,5 +55,5 @@ class PairDeterminer:
         found, value, rest_cards = self._get_pair(grouped_hand)
 
         if found:
-            return HandValue(Ranking.PAIR, value, rest_cards)
+            return HandValue(self._ranking, value, rest_cards)
         return HandValue(Ranking.HIGH_CARD, None, rest_cards)
